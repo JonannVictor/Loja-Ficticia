@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VivaMart | Tudo para sua casa, tecnologia e rotina</title>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="top-strip">
+        <span>Frete leve para compras acima de R$ 149</span>
+        <a href="#benefits">Conheca os beneficios</a>
+      </div>
+
+      <div class="header-main">
+        <a class="brand" href="#" aria-label="Pagina inicial VivaMart">
+          <span class="brand-mark">V</span>
+          <span>VivaMart</span>
+        </a>
+
+        <form class="search" role="search">
+          <label class="sr-only" for="search-input">Buscar produtos</label>
+          <input id="search-input" type="search" placeholder="O que voce procura hoje?" />
+          <button type="submit" aria-label="Buscar">
+            <i data-lucide="search"></i>
+          </button>
+        </form>
+
+        <div class="header-actions" aria-label="Acoes principais">
+          <button class="icon-action" type="button" data-modal="cep" aria-label="Informar CEP">
+            <i data-lucide="map-pin"></i>
+            <span>Meu CEP</span>
+          </button>
+          <button class="icon-action" type="button" data-modal="account" aria-label="Entrar ou cadastrar">
+            <i data-lucide="user-round"></i>
+            <span>Entrar</span>
+          </button>
+          <button class="cart-button" type="button" aria-label="Abrir carrinho">
+            <i data-lucide="shopping-cart"></i>
+            <span class="cart-count" aria-live="polite">0</span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="department-nav" aria-label="Departamentos">
+        <button class="dept-trigger" type="button">
+          <i data-lucide="menu"></i>
+          Departamentos
+        </button>
+        <a href="#products" data-category="Celulares">Celulares</a>
+        <a href="#products" data-category="TV e Video">TV e Video</a>
+        <a href="#products" data-category="Casa">Casa</a>
+        <a href="#products" data-category="Moveis">Moveis</a>
+        <a href="#products" data-category="Informatica">Informatica</a>
+        <a href="#products" data-category="Moda">Moda</a>
+        <a href="#products" data-category="Todos">Todos</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Ofertas escolhidas para voce</p>
+          <h1>VivaMart</h1>
+          <p>Uma loja ficticia com tecnologia, casa, beleza e utilidades em uma experiencia rapida de comprar.</p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#products">Ver ofertas</a>
+            <a class="secondary-link" href="#benefits">Servicos</a>
+          </div>
+        </div>
+        <div class="hero-media" aria-label="Produtos em destaque">
+          <img
+            src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=1100&q=80"
+            alt="Produtos de tecnologia sobre uma mesa"
+          />
+          <div class="deal-badge">
+            <span>ate</span>
+            <strong>35%</strong>
+            <span>off</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="quick-links" aria-label="Atalhos de compra">
+        <a href="#products" data-category="Ofertas">
+          <i data-lucide="badge-percent"></i>
+          Ofertas do dia
+        </a>
+        <a href="#products" data-category="Casa">
+          <i data-lucide="sofa"></i>
+          Casa
+        </a>
+        <a href="#products" data-category="Informatica">
+          <i data-lucide="laptop"></i>
+          Informatica
+        </a>
+        <a href="#products" data-category="Beleza">
+          <i data-lucide="sparkles"></i>
+          Beleza
+        </a>
+        <a href="#products" data-category="Automotivo">
+          <i data-lucide="car"></i>
+          Automotivo
+        </a>
+        <a href="#products" data-category="Mercado">
+          <i data-lucide="shopping-basket"></i>
+          Mercado
+        </a>
+      </section>
+
+      <section class="welcome-panel">
+        <div>
+          <p class="eyebrow">Ola, vem comprar melhor</p>
+          <h2>Entre para ver ofertas, salvar favoritos e acompanhar seus pedidos.</h2>
+        </div>
+        <button class="primary-button" type="button" data-modal="account">Entrar ou cadastrar</button>
+      </section>
+
+      <section class="promo-band" aria-label="Campanhas">
+        <article>
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=720&q=80" alt="Sala com poltrona e luminaria" />
+          <div>
+            <span>Casa pronta</span>
+            <strong>Moveis e decoracao com entrega combinada</strong>
+          </div>
+        </article>
+        <article>
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=720&q=80" alt="Notebook aberto em uma mesa" />
+          <div>
+            <span>Upgrade digital</span>
+            <strong>Notebooks, monitores e acessorios</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="section-head" id="products">
+        <div>
+          <p class="eyebrow">Vitrine</p>
+          <h2>Produtos em destaque</h2>
+        </div>
+        <div class="filter-pills" aria-label="Filtrar produtos">
+          <button class="active" type="button" data-filter="Todos">Todos</button>
+          <button type="button" data-filter="Casa">Casa</button>
+          <button type="button" data-filter="Informatica">Informatica</button>
+          <button type="button" data-filter="Celulares">Celulares</button>
+        </div>
+      </section>
+
+      <section class="product-grid" aria-live="polite"></section>
+
+      <section class="benefits" id="benefits">
+        <article>
+          <i data-lucide="truck"></i>
+          <h3>Entrega flexivel</h3>
+          <p>Escolha receber em casa ou retirar em pontos parceiros.</p>
+        </article>
+        <article>
+          <i data-lucide="credit-card"></i>
+          <h3>Pagamento simples</h3>
+          <p>Pix, cartao e parcelamento com resumo claro antes de fechar.</p>
+        </article>
+        <article>
+          <i data-lucide="shield-check"></i>
+          <h3>Compra protegida</h3>
+          <p>Pedidos acompanhados do pagamento ate a entrega.</p>
+        </article>
+        <article>
+          <i data-lucide="message-circle"></i>
+          <h3>Atendimento rapido</h3>
+          <p>Canais digitais para tirar duvidas sobre produtos e pedidos.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <h2>VivaMart</h2>
+        <p>Marketplace ficticio criado como referencia visual original para uma loja online brasileira.</p>
+      </div>
+      <nav aria-label="Links do rodape">
+        <a href="#">Nossas lojas</a>
+        <a href="#">Central de atendimento</a>
+        <a href="#">Venda conosco</a>
+        <a href="#">Seguranca e privacidade</a>
+      </nav>
+    </footer>
+
+    <dialog class="modal" id="cep-modal">
+      <form method="dialog">
+        <button class="close-modal" aria-label="Fechar">
+          <i data-lucide="x"></i>
+        </button>
+        <h2>Informe seu CEP</h2>
+        <p>Veja prazos e opcoes de entrega para sua regiao.</p>
+        <label>
+          CEP
+          <input inputmode="numeric" placeholder="00000-000" />
+        </label>
+        <button class="primary-button" value="confirm">Aplicar</button>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="account-modal">
+      <form method="dialog">
+        <button class="close-modal" aria-label="Fechar">
+          <i data-lucide="x"></i>
+        </button>
+        <h2>Bem-vindo ao VivaMart</h2>
+        <p>Entre para salvar favoritos, acompanhar pedidos e receber recomendacoes.</p>
+        <label>
+          E-mail
+          <input type="email" placeholder="voce@email.com" />
+        </label>
+        <button class="primary-button" value="confirm">Continuar</button>
+      </form>
+    </dialog>
+  </body>
+</html>
