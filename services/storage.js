@@ -2,8 +2,8 @@ const prefix = "vivamart:";
 
 export function readStorage(key, fallback) {
   try {
-    const raw = localStorage.getItem(prefix + key);
-    return raw ? JSON.parse(raw) : fallback;
+    const value = localStorage.getItem(prefix + key);
+    return value ? JSON.parse(value) : fallback;
   } catch {
     return fallback;
   }

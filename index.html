@@ -1,195 +1,83 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>VivaMart 2.0 | Marketplace ficticio brasileiro</title>
-    <meta
-      name="description"
-      content="VivaMart e um marketplace ficticio criado para demonstracao de produto, UX e front-end."
-    />
+    <title>VivaMart 2.0</title>
     <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
     <script type="module" src="app.js"></script>
   </head>
   <body>
-    <a class="skip-link" href="#app">Pular para o conteudo</a>
-
+    <a class="skip-link" href="#app" data-i18n="skip">Pular para o conteudo</a>
     <header class="site-header" data-header>
-      <div class="top-strip" data-promo-strip>
+      <div class="top-strip">
         <span data-promo-message>Frete leve para compras acima de R$ 149</span>
-        <a href="#/checkout">Ambiente demonstrativo</a>
-      </div>
-
-      <div class="header-main">
-        <a class="brand" href="#/" aria-label="Pagina inicial VivaMart">
-          <span class="brand-mark">V</span>
-          <span>VivaMart</span>
-        </a>
-
-        <form class="search" role="search" data-search-form autocomplete="off">
-          <label class="sr-only" for="search-input">Buscar produtos</label>
-          <input
-            id="search-input"
-            type="search"
-            placeholder="O que voce procura hoje?"
-            aria-controls="search-panel"
-            aria-expanded="false"
-            data-search-input
-          />
-          <button type="submit" aria-label="Buscar">
-            <i data-lucide="search"></i>
-          </button>
-          <div class="search-panel" id="search-panel" role="listbox" data-search-panel hidden></div>
-        </form>
-
-        <div class="header-actions" aria-label="Acoes principais">
-          <button class="icon-action location-action" type="button" data-open-cep aria-label="Informar CEP">
-            <i data-lucide="map-pin"></i>
-            <span data-location-label>Meu CEP</span>
-          </button>
-          <button class="icon-action" type="button" data-open-account aria-label="Entrar ou cadastrar">
-            <i data-lucide="user-round"></i>
-            <span data-account-label>Entrar</span>
-          </button>
-          <a class="icon-action favorites-link" href="#/favoritos" aria-label="Favoritos">
-            <i data-lucide="heart"></i>
-            <span>Favoritos</span>
-          </a>
-          <button class="cart-button" type="button" aria-label="Abrir carrinho" data-open-cart>
-            <i data-lucide="shopping-cart"></i>
-            <span class="cart-count" aria-live="polite" data-cart-count>0</span>
-          </button>
+        <div class="utility-actions" aria-label="Preferencias">
+          <button class="utility-toggle" data-toggle-theme type="button"><i data-lucide="moon"></i><span data-theme-label>Dark</span></button>
+          <button class="utility-toggle" data-toggle-lang type="button"><i data-lucide="languages"></i><span data-lang-label>EN</span></button>
         </div>
       </div>
-
-      <nav class="department-nav" aria-label="Departamentos">
-        <button class="dept-trigger" type="button" data-open-menu aria-expanded="false">
-          <i data-lucide="menu"></i>
-          Departamentos
-        </button>
-        <a href="#/categoria/Celulares">Celulares</a>
-        <a href="#/categoria/TV%20e%20Video">TV e Video</a>
-        <a href="#/categoria/Casa">Casa</a>
-        <a href="#/categoria/Moveis">Moveis</a>
+      <div class="header-main">
+        <a class="brand" href="#/"><span class="brand-mark">V</span><span>VivaMart</span></a>
+        <form class="search" data-search-form role="search">
+          <label class="sr-only" for="search-input" data-i18n="searchLabel">Buscar produtos</label>
+          <input id="search-input" data-search-input type="search" placeholder="O que voce procura hoje?" autocomplete="off" />
+          <button aria-label="Buscar" data-i18n-aria="searchLabel"><i data-lucide="search"></i></button>
+          <div class="search-panel" data-search-panel hidden></div>
+        </form>
+        <div class="header-actions">
+          <button class="icon-action preference-action" data-toggle-theme aria-label="Ativar modo escuro"><i data-lucide="moon"></i><span data-theme-label>Dark</span></button>
+          <button class="icon-action preference-action" data-toggle-lang aria-label="Change language"><i data-lucide="languages"></i><span data-lang-label>EN</span></button>
+          <button class="icon-action" data-open-cep><i data-lucide="map-pin"></i><span data-location-label>Meu CEP</span></button>
+          <button class="icon-action" data-open-account><i data-lucide="user-round"></i><span data-account-label>Entrar</span></button>
+          <a class="icon-action hide-small" href="#/favoritos"><i data-lucide="heart"></i><span data-i18n="favorites">Favoritos</span></a>
+          <button class="cart-button" data-open-cart aria-label="Abrir carrinho" data-i18n-aria="openCart"><i data-lucide="shopping-cart"></i><span data-cart-count>0</span></button>
+        </div>
+      </div>
+      <nav class="department-nav">
+        <button class="dept-trigger" data-open-menu><i data-lucide="menu"></i><span data-i18n="departments">Departamentos</span></button>
+        <a href="#/categoria/Celulares" data-i18n="catCelulares">Celulares</a>
         <a href="#/categoria/Informatica">Informatica</a>
+        <a href="#/categoria/Casa">Casa</a>
         <a href="#/categoria/Beleza">Beleza</a>
-        <a href="#/produtos">Todos</a>
+        <a href="#/produtos" data-i18n="all">Todos</a>
       </nav>
-
       <div class="mega-menu" data-mega-menu hidden></div>
     </header>
-
-    <main id="app" tabindex="-1" data-view></main>
-
+    <main id="app" data-view tabindex="-1"></main>
+    <div class="floating-preferences" aria-label="Preferencias da pagina">
+      <button class="floating-pref-button" data-toggle-theme type="button" aria-label="Alternar modo claro e escuro">
+        <span aria-hidden="true">🌙</span>
+        <span data-theme-label>Dark</span>
+      </button>
+      <button class="floating-pref-button" data-toggle-lang type="button" aria-label="Alternar idioma portugues e ingles">
+        <span aria-hidden="true">🌐</span>
+        <span data-lang-label>EN</span>
+      </button>
+    </div>
     <footer class="site-footer">
-      <div class="footer-brand">
-        <a class="brand brand-footer" href="#/" aria-label="Pagina inicial VivaMart">
-          <span class="brand-mark">V</span>
-          <span>VivaMart</span>
-        </a>
-        <p>
-          VivaMart e um projeto ficticio desenvolvido para fins de demonstracao e portfolio.
-          Nenhuma compra ou pagamento real e processado.
-        </p>
-        <div class="socials" aria-label="Redes sociais ficticias">
-          <a href="#" aria-label="Instagram VivaMart"><i data-lucide="instagram"></i></a>
-          <a href="#" aria-label="YouTube VivaMart"><i data-lucide="youtube"></i></a>
-          <a href="#" aria-label="Mensagem VivaMart"><i data-lucide="message-circle"></i></a>
-        </div>
-      </div>
-      <nav aria-label="VivaMart">
-        <h2>VivaMart</h2>
-        <a href="#">Sobre a VivaMart</a>
-        <a href="#">Trabalhe conosco</a>
-        <a href="#">Termos</a>
-        <a href="#">Privacidade</a>
-      </nav>
-      <nav aria-label="Ajuda">
-        <h2>Ajuda</h2>
-        <a href="#">Central de atendimento</a>
-        <a href="#">Entregas</a>
-        <a href="#">Trocas</a>
-        <a href="#">Pedidos</a>
-      </nav>
-      <nav aria-label="Parceiros">
-        <h2>Parceiros</h2>
-        <a href="#">Venda conosco</a>
-        <a href="#">Area do parceiro</a>
-        <div class="payment-chips" aria-label="Metodos de pagamento demonstrativos">
-          <span>Pix</span>
-          <span>Visa</span>
-          <span>Master</span>
-        </div>
-      </nav>
+      <section>
+        <a class="brand brand-footer" href="#/"><span class="brand-mark">V</span><span>VivaMart</span></a>
+        <p data-i18n="footerDisclaimer">VivaMart e um projeto ficticio para demonstracao e portfolio. Nenhuma compra ou pagamento real e processado.</p>
+      </section>
+      <nav><h2>VivaMart</h2><a data-i18n="about">Sobre</a><a data-i18n="terms">Termos</a><a data-i18n="privacy">Privacidade</a></nav>
+      <nav><h2 data-i18n="help">Ajuda</h2><a data-i18n="support">Central</a><a data-i18n="deliveries">Entregas</a><a data-i18n="returns">Trocas</a></nav>
+      <nav><h2 data-i18n="partners">Parceiros</h2><a data-i18n="sellWithUs">Venda conosco</a><a data-i18n="partnerArea">Area do parceiro</a><div class="payment-chips"><span>Pix</span><span>Visa</span><span>Master</span></div></nav>
     </footer>
-
-    <nav class="mobile-tabs" aria-label="Navegacao mobile">
-      <a href="#/"><i data-lucide="home"></i><span>Inicio</span></a>
-      <button type="button" data-open-menu><i data-lucide="layout-grid"></i><span>Categorias</span></button>
-      <a href="#/produtos"><i data-lucide="search"></i><span>Buscar</span></a>
-      <a href="#/favoritos"><i data-lucide="heart"></i><span>Favoritos</span></a>
-      <button type="button" data-open-account><i data-lucide="user-round"></i><span>Conta</span></button>
+    <nav class="mobile-tabs">
+      <a href="#/"><i data-lucide="home"></i><span data-i18n="home">Inicio</span></a>
+      <button data-open-menu><i data-lucide="layout-grid"></i><span data-i18n="categories">Categorias</span></button>
+      <a href="#/produtos"><i data-lucide="search"></i><span data-i18n="searchShort">Buscar</span></a>
+      <a href="#/favoritos"><i data-lucide="heart"></i><span data-i18n="favorites">Favoritos</span></a>
+      <button data-open-account><i data-lucide="user-round"></i><span data-i18n="account">Conta</span></button>
     </nav>
-
     <div class="overlay" data-overlay hidden></div>
-
-    <aside class="drawer menu-drawer" data-menu-drawer aria-hidden="true" aria-label="Departamentos">
-      <div class="drawer-head">
-        <h2>Departamentos</h2>
-        <button type="button" data-close-drawers aria-label="Fechar menu"><i data-lucide="x"></i></button>
-      </div>
-      <div data-drawer-menu-content></div>
-    </aside>
-
-    <aside class="drawer cart-drawer" data-cart-drawer aria-hidden="true" aria-label="Mini carrinho">
-      <div class="drawer-head">
-        <h2>Seu carrinho</h2>
-        <button type="button" data-close-drawers aria-label="Fechar carrinho"><i data-lucide="x"></i></button>
-      </div>
-      <div class="drawer-body" data-cart-content></div>
-    </aside>
-
-    <aside class="drawer filter-drawer" data-filter-drawer aria-hidden="true" aria-label="Filtros">
-      <div class="drawer-head">
-        <h2>Filtros</h2>
-        <button type="button" data-close-drawers aria-label="Fechar filtros"><i data-lucide="x"></i></button>
-      </div>
-      <div class="drawer-body" data-mobile-filters></div>
-    </aside>
-
-    <dialog class="modal" id="cep-modal">
-      <form method="dialog" data-cep-form>
-        <button class="close-modal" aria-label="Fechar"><i data-lucide="x"></i></button>
-        <h2>Informe seu CEP</h2>
-        <p>Simule visualmente prazos e opcoes de entrega para sua regiao. Nenhum calculo real sera feito.</p>
-        <label>
-          CEP
-          <input name="cep" inputmode="numeric" placeholder="00000-000" maxlength="9" required />
-        </label>
-        <small class="form-hint" data-cep-error></small>
-        <button class="primary-button" value="confirm">Aplicar simulacao</button>
-      </form>
-    </dialog>
-
-    <dialog class="modal" id="account-modal">
-      <form method="dialog" data-account-form>
-        <button class="close-modal" aria-label="Fechar"><i data-lucide="x"></i></button>
-        <h2>Bem-vindo ao VivaMart</h2>
-        <p>Entre de forma demonstrativa para personalizar a experiencia localmente.</p>
-        <label>
-          Nome
-          <input name="name" placeholder="Seu nome" required />
-        </label>
-        <label>
-          E-mail
-          <input name="email" type="email" placeholder="voce@email.com" required />
-        </label>
-        <button class="primary-button" value="confirm">Continuar</button>
-      </form>
-    </dialog>
-
-    <div class="toast-region" aria-live="polite" aria-atomic="true" data-toasts></div>
+    <aside class="drawer menu-drawer" data-menu-drawer><div class="drawer-head"><h2 data-i18n="departments">Departamentos</h2><button data-close-drawers><i data-lucide="x"></i></button></div><div data-drawer-menu></div></aside>
+    <aside class="drawer cart-drawer" data-cart-drawer><div class="drawer-head"><h2 data-i18n="yourCart">Seu carrinho</h2><button data-close-drawers><i data-lucide="x"></i></button></div><div class="drawer-body" data-cart-content></div></aside>
+    <dialog class="modal" id="cep-modal"><form method="dialog" data-cep-form><button class="close-modal"><i data-lucide="x"></i></button><h2 data-i18n="cepTitle">Informe seu CEP</h2><p data-i18n="cepText">Simulacao visual de regiao e frete.</p><label><span data-i18n="cep">CEP</span><input name="cep" placeholder="00000-000" maxlength="9" required /></label><small data-cep-error></small><button class="primary-button" data-i18n="apply">Aplicar</button></form></dialog>
+    <dialog class="modal" id="account-modal"><form method="dialog" data-account-form><button class="close-modal"><i data-lucide="x"></i></button><h2 data-i18n="accountWelcome">Bem-vindo ao VivaMart</h2><p data-i18n="accountText">Perfil demonstrativo salvo apenas localmente.</p><label><span data-i18n="name">Nome</span><input name="name" required /></label><label>E-mail<input name="email" type="email" required /></label><button class="primary-button" data-i18n="continue">Continuar</button></form></dialog>
+    <div class="toast-region" data-toasts></div>
   </body>
 </html>
