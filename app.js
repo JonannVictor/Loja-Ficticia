@@ -34,6 +34,7 @@ let heroTimer;
 let promoTimer;
 let flashTimer;
 let searchActiveIndex = -1;
+let searchCloseTimer;
 
 function refreshIcons() {
   if (window.lucide) {
@@ -225,33 +226,9 @@ function applyFilter(filter) {
 }
 
 function homePage() {
-  const campaign = campaigns[state.heroIndex];
   return `
     <section class="page">
-      <section class="hero" data-hero>
-        <div class="hero-copy" data-tone="${campaign.tone}">
-          <p class="eyebrow">${campaign.eyebrow}</p>
-          <h1>${campaign.title}</h1>
-          <p>${campaign.description}</p>
-          <div class="hero-actions">
-            <a class="primary-link" href="#/categoria/${encodeURIComponent(campaign.filter)}">${campaign.cta}</a>
-            <a class="secondary-link" href="#/produtos">Ver vitrine completa</a>
-          </div>
-        </div>
-        <div class="hero-media">
-          <img src="${campaign.image}" alt="${campaign.title}">
-          <div class="deal-badge">${campaign.badge}</div>
-        </div>
-      </section>
-      <div class="hero-controls">
-        <div class="carousel-dots" aria-label="Campanhas">
-          ${campaigns.map((_, index) => `<button type="button" class="${index === state.heroIndex ? "active" : ""}" data-hero-dot="${index}" aria-label="Campanha ${index + 1}"></button>`).join("")}
-        </div>
-        <div class="carousel-buttons">
-          <button class="plain-icon" type="button" data-hero-prev aria-label="Campanha anterior"><i data-lucide="chevron-left"></i></button>
-          <button class="plain-icon" type="button" data-hero-next aria-label="Proxima campanha"><i data-lucide="chevron-right"></i></button>
-        </div>
-      </div>
+      <div data-hero-shell>${heroBlock()}</div>
       ${quickLinks()}
       ${welcomePanel()}
       ${editorialBanners()}
@@ -261,6 +238,36 @@ function homePage() {
       ${flashSection()}
       ${benefitsSection()}
     </section>
+  `;
+}
+
+function heroBlock() {
+  const campaign = campaigns[state.heroIndex];
+  return `
+    <section class="hero" data-hero>
+      <div class="hero-copy" data-tone="${campaign.tone}">
+        <p class="eyebrow">${campaign.eyebrow}</p>
+        <h1>${campaign.title}</h1>
+        <p>${campaign.description}</p>
+        <div class="hero-actions">
+          <a class="primary-link" href="#/categoria/${encodeURIComponent(campaign.filter)}">${campaign.cta}</a>
+          <a class="secondary-link" href="#/produtos">Ver vitrine completa</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="${campaign.image}" alt="${campaign.title}">
+        <div class="deal-badge">${campaign.badge}</div>
+      </div>
+    </section>
+    <div class="hero-controls">
+      <div class="carousel-dots" aria-label="Campanhas">
+        ${campaigns.map((_, index) => `<button type="button" class="${index === state.heroIndex ? "active" : ""}" data-hero-dot="${index}" aria-label="Campanha ${index + 1}"></button>`).join("")}
+      </div>
+      <div class="carousel-buttons">
+        <button class="plain-icon" type="button" data-hero-prev aria-label="Campanha anterior"><i data-lucide="chevron-left"></i></button>
+        <button class="plain-icon" type="button" data-hero-next aria-label="Proxima campanha"><i data-lucide="chevron-right"></i></button>
+      </div>
+    </div>
   `;
 }
 
@@ -743,15 +750,7 @@ function bindDynamicEvents() {
     renderMenus();
     openDrawer(filterDrawer);
   });
-  document.querySelectorAll("[data-hero-dot]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.heroIndex = Number(button.dataset.heroDot);
-      render();
-      startHero();
-    });
-  });
-  document.querySelector("[data-hero-next]")?.addEventListener("click", () => moveHero(1));
-  document.querySelector("[data-hero-prev]")?.addEventListener("click", () => moveHero(-1));
+  bindHeroEvents();
   bindProductPageEvents();
   bindCheckoutEvents();
   document.querySelectorAll("[data-freight]").forEach((button) => button.addEventListener("click", () => toast("Frete simulado para esta experiencia visual.", "truck")));
@@ -806,9 +805,33 @@ function bindCheckoutEvents() {
   });
 }
 
+function isHomeRoute() {
+  return (location.hash || "#/") === "#/";
+}
+
+function bindHeroEvents() {
+  document.querySelectorAll("[data-hero-dot]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.heroIndex = Number(button.dataset.heroDot);
+      updateHero();
+      startHero();
+    });
+  });
+  document.querySelector("[data-hero-next]")?.addEventListener("click", () => moveHero(1));
+  document.querySelector("[data-hero-prev]")?.addEventListener("click", () => moveHero(-1));
+}
+
+function updateHero() {
+  const shell = document.querySelector("[data-hero-shell]");
+  if (!shell || !isHomeRoute()) return;
+  shell.innerHTML = heroBlock();
+  bindHeroEvents();
+  refreshIcons();
+}
+
 function moveHero(direction) {
   state.heroIndex = (state.heroIndex + direction + campaigns.length) % campaigns.length;
-  render();
+  updateHero();
   startHero();
 }
 
@@ -817,7 +840,7 @@ function startHero() {
   heroTimer = setInterval(() => {
     if (document.hidden) return;
     state.heroIndex = (state.heroIndex + 1) % campaigns.length;
-    if ((location.hash || "#/") === "#/") render();
+    if (isHomeRoute()) updateHero();
   }, 6500);
 }
 
@@ -939,7 +962,9 @@ function bindForms() {
 }
 
 function bindSearch() {
-  document.querySelector("[data-search-form]").addEventListener("submit", (event) => {
+  const searchForm = document.querySelector("[data-search-form]");
+
+  searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const term = searchInput.value.trim();
     if (!term) return;
@@ -950,6 +975,13 @@ function bindSearch() {
   });
   searchInput.addEventListener("input", () => renderSearchPanel(searchInput.value.trim()));
   searchInput.addEventListener("focus", () => renderSearchPanel(searchInput.value.trim()));
+  searchForm.addEventListener("mouseenter", () => clearTimeout(searchCloseTimer));
+  searchForm.addEventListener("mouseleave", () => scheduleSearchClose(180));
+  searchForm.addEventListener("focusout", () => scheduleSearchClose(120));
+  document.addEventListener("pointerdown", (event) => {
+    if (!searchForm.contains(event.target)) closeSearch();
+  });
+  window.addEventListener("scroll", closeSearch, { passive: true });
   searchInput.addEventListener("keydown", (event) => {
     const options = [...searchPanel.querySelectorAll("[data-search-option]")];
     if (!options.length) return;
@@ -959,6 +991,17 @@ function bindSearch() {
       options[searchActiveIndex].focus();
     }
   });
+}
+
+function scheduleSearchClose(delay = 160) {
+  clearTimeout(searchCloseTimer);
+  searchCloseTimer = setTimeout(() => {
+    const searchForm = document.querySelector("[data-search-form]");
+    const focusIsOnOption = document.activeElement?.hasAttribute("data-search-option");
+    if (!searchForm.matches(":hover") && !focusIsOnOption) {
+      closeSearch();
+    }
+  }, delay);
 }
 
 function renderSearchPanel(term) {
@@ -1018,6 +1061,7 @@ function renderSearchResults(term) {
 }
 
 function closeSearch() {
+  clearTimeout(searchCloseTimer);
   searchPanel.hidden = true;
   searchInput.setAttribute("aria-expanded", "false");
   searchActiveIndex = -1;
